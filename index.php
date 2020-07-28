@@ -200,6 +200,10 @@ $encryptedtxt = base64_encode($iv.$tag.$ciphertext);
   if (isset($_POST['submitunlock'])) {
     $hash = $_POST['hash'];
     $keyd = $_POST['key'];
+   
+    if(!empty($_POST['honey'])){
+     exit;
+    }
 
     $encrypted = base64_decode($keyd);
     $ckey = substr(hash('sha256', $strongcipherkey, true), 0, 32);
