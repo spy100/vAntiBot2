@@ -120,7 +120,6 @@ label{
 
 
 <?php
-$strongcipherkey = "e(J}xYpT7ecp)Yp8cSxG^}_WWcf<ag!YmEfgS{?xVj5Gf`Vy_qua`BAzpfTB6P"; //replace chipher key with your own key ,make sure it is strong it's like a passw
 
 //replace this with a database of famous people
 $famouspeople = array("Gal Gadot","Julia Roberts","Scarlett Johansson","Melissa McCarthy","Margot Robbie","Halle Berry","Meryl Streep","Emma Stone","Mila Kunis","Charlize Theron","Jennifer Lawrence","Jenifer Aniston","Sandra Bullock","Nicole Kidman","Natalie Portman","Paul Rudd","Bradley Cooper","Brad Pitt","Dustin Hoffman","Angelina Jolie","Mike Tyson","Will Smith","Leonardo DiCaprio","Johnny Depp","George Clooney","Tom Cruise","Harrison Ford","Al Pacino");
