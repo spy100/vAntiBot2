@@ -1,10 +1,10 @@
 
 <?php
-session_start();
 /*
  Copyright © 2020 Alin Tanase All rights reserved 
  If you need help with implementation contact me on telegram @Alin100 or email wdesginer2010[dot]gmail.com
 */
+include 'conn.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -175,6 +175,7 @@ $ciphertext = openssl_encrypt($plaintext, $cipher, $ckey, OPENSSL_RAW_DATA, $iv,
 $encryptedtxt = base64_encode($iv.$tag.$ciphertext);
 
 
+
     echo "<br><div class=\"ihuman\" >
     <form action=\"index.php\" method=\"post\" ><input class=\"honey\" type=\"text\" name=\"honey\" value=\"\" >
      <input type=\"hidden\" name=\"hash\" value=\"$u\" >
@@ -191,7 +192,7 @@ $encryptedtxt = base64_encode($iv.$tag.$ciphertext);
   if (isset($_POST['submitunlock'])) {
     $hash = $_POST['hash'];
     $keyd = $_POST['key'];
-   
+
     if(!empty($_POST['honey'])){
       header("Location: http://google.com");
       exit;
