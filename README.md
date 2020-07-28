@@ -12,13 +12,6 @@ How it works (The principle) : The visitor has to play a game of "Head & Tails" 
 
 Installation Guide:
 
-$strongcipherkey = "e(J}xYpT7ecp)Yp8cSxG^}_WWcf<ag!YmEfgS{?xVj5Gf`Vy_qua`BAzpfTB6P"; //replace chipher key with your own key ,make sure it is strong it's like a passw
-
-
-Replace e(J}xYpT7ecp)Yp8cSxG^}_WWcf<ag!YmEfgS{?xVj5Gf`Vy_qua`BAzpfTB6P with your own strong cipher key.
-
-
-
 Create a database or a table in your database
 
 CREATE TABLE vAntibot (
