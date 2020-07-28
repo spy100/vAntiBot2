@@ -204,8 +204,6 @@ if($result = mysqli_query($link, $sql)){
 
     echo "<br><div class=\"ihuman\" >
     <form action=\"index.php\" method=\"post\" ><input class=\"honey\" type=\"text\" name=\"honey\" value=\"\" >
-     <input type=\"hidden\" name=\"hash\" value=\"$u\" >
-     <input type=\"hidden\" name=\"key\" value=\"$encryptedtxt\" >
      <input type=\"submit\" name=\"submitunlock\" value=\"I am Human\" />
      </form></div>";
 
@@ -216,32 +214,51 @@ if($result = mysqli_query($link, $sql)){
 
 <?php 
   if (isset($_POST['submitunlock'])) {
-    $hash = $_POST['hash'];
-    $keyd = $_POST['key'];
 
     if(!empty($_POST['honey'])){
       header("Location: http://google.com");
       exit;
     }
 
-    $encrypted = base64_decode($keyd);
-    $ckey = substr(hash('sha256', $strongcipherkey, true), 0, 32);
-    $cipher = 'aes-256-gcm';
-    $iv_len = openssl_cipher_iv_length($cipher);
-    $tag_length = 16;
-    $iv = substr($encrypted, 0, $iv_len);
-    $tag = substr($encrypted, $iv_len, $tag_length);
-    $ciphertext = substr($encrypted, $iv_len + $tag_length);
-    $decrypted = openssl_decrypt($ciphertext, $cipher, $ckey, OPENSSL_RAW_DATA, $iv, $tag);
+    //tiny fix to do here 
 
-    
-    if(password_verify($decrypted, $hash)){
-      echo "<br><label>You are human</label>";
+    $sql2 = "SELECT vkey,vhash FROM vAntibot WHERE id ='1'";
+    $myarr = array();
+   if($result2 = mysqli_query($link, $sql2)){
+     if(mysqli_num_rows($result2) > 0){ 
+       while ($row2 = mysqli_fetch_array($result2)){
+         $vkey = $row2['vkey'];
+         $vhash = $row2['vhash'];
+
+
+         $encrypted = base64_decode($vkey);
+         $ckey = substr(hash('sha256', $strongcipherkey, true), 0, 32);
+         $cipher = 'aes-256-gcm';
+         $iv_len = openssl_cipher_iv_length($cipher);
+         $tag_length = 16;
+         $iv = substr($encrypted, 0, $iv_len);
+         $tag = substr($encrypted, $iv_len, $tag_length);
+         $ciphertext = substr($encrypted, $iv_len + $tag_length);
+         $decrypted = openssl_decrypt($ciphertext, $cipher, $ckey, OPENSSL_RAW_DATA, $iv, $tag);
+     
+         
+         if(password_verify($decrypted, $vhash)){
+           echo "<br><label>You are human</label>";
+         }else{
+           echo "<br><label>You are a bot</label>";
+           //Redirect visitor or ban him,or log how many failed attempts...
+         }
+
+
+
+       }
+     }else{
+       echo "";
+     }
     }else{
-      echo "<br><label>You are a bot</label>";
-      //Redirect visitor or ban him,or log how many failed attempts...
+      echo "ERROR: Could not able to execute $sql2. " . mysqli_error($link);
     }
-    
+
   }
 ?>
 </div>
