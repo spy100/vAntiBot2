@@ -176,6 +176,32 @@ $encryptedtxt = base64_encode($iv.$tag.$ciphertext);
 
 
 
+$sql = "SELECT vkey,vhash FROM vAntibot";
+if($result = mysqli_query($link, $sql)){
+  if(mysqli_num_rows($result) > 0){ 
+
+    
+    $sql2 = "UPDATE vAntibot SET vkey = '$encryptedtxt',vhash='$u' WHERE id = '1'";
+    if(mysqli_query($link, $sql2)){
+    }else{ 
+      echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }  
+
+  }else{
+
+    $sql = "INSERT INTO vAntibot (vkey,vhash) VALUES ('$encryptedtxt','$u')";
+    if (mysqli_query($link, $sql)) {
+    } else {
+      echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+
+  }
+}else{
+  echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+}
+
+
+
     echo "<br><div class=\"ihuman\" >
     <form action=\"index.php\" method=\"post\" ><input class=\"honey\" type=\"text\" name=\"honey\" value=\"\" >
      <input type=\"hidden\" name=\"hash\" value=\"$u\" >
