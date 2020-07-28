@@ -16,3 +16,16 @@ $strongcipherkey = "e(J}xYpT7ecp)Yp8cSxG^}_WWcf<ag!YmEfgS{?xVj5Gf`Vy_qua`BAzpfTB
 
 
 Replace e(J}xYpT7ecp)Yp8cSxG^}_WWcf<ag!YmEfgS{?xVj5Gf`Vy_qua`BAzpfTB6P with your own strong cipher key.
+
+
+
+Create a database or a table in your database
+
+CREATE TABLE vAntibot (
+      id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      vhash VARCHAR(255) NOT NULL
+);
+
+
+Edit in conn.php
+$link = mysqli_connect("localhost", "user", "passw", "databasename"); 
