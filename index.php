@@ -202,7 +202,8 @@ $encryptedtxt = base64_encode($iv.$tag.$ciphertext);
     $keyd = $_POST['key'];
    
     if(!empty($_POST['honey'])){
-     exit;
+      header("Location: http://google.com");
+      exit;
     }
 
     $encrypted = base64_decode($keyd);
