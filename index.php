@@ -82,6 +82,43 @@ label{
 <input type="submit" name="submit" value="Unlock" />
 </form>
 
+
+
+<?php 
+  if (isset($_POST['submitunlock'])) {
+
+    if(!empty($_POST['honey'])){
+      header("Location: http://google.com");
+      exit;
+    }
+
+    $zkey = $_POST['key'];
+
+    $sql2 = "SELECT vhash FROM vAntibot WHERE id ='1'";
+   if($result2 = mysqli_query($link, $sql2)){
+     if(mysqli_num_rows($result2) > 0){ 
+       while ($row2 = mysqli_fetch_array($result2)){
+         $vhash = $row2['vhash'];
+         if(password_verify($zkey, $vhash)){
+           $msg = "<br><label>You are human</label>";
+         }else{
+           $msg = "<br><label>You are a bot</label>";
+           //Redirect visitor or ban him,or log how many failed attempts...
+         }
+       }
+     }else{
+       echo "";
+     }
+    }else{
+      echo "ERROR: Could not able to execute $sql2. " . mysqli_error($link);
+    }
+
+  }
+?>
+
+
+
+
 <?php
 $strongcipherkey = "e(J}xYpT7ecp)Yp8cSxG^}_WWcf<ag!YmEfgS{?xVj5Gf`Vy_qua`BAzpfTB6P"; //replace chipher key with your own key ,make sure it is strong it's like a passw
 
@@ -145,12 +182,15 @@ echo "</div>";
  
 
 
-
-
-
-
-
-
+function generateRandomString($length = 10) {
+  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $charactersLength = strlen($characters);
+  $randomString = '';
+  for ($i = 0; $i < $length; $i++) {
+      $randomString .= $characters[rand(0, $charactersLength - 1)];
+  }
+  return $randomString;
+}
 
 if($z == $a){
   //here we encrypt the good key so we can send it via post with the hash start 
@@ -158,38 +198,22 @@ if($z == $a){
   $u = password_hash($key, PASSWORD_BCRYPT);
 }else{
   //here the fake key
-  $key1 = bin2hex(random_bytes(64));
-  $u = password_hash($key1, PASSWORD_BCRYPT);
   $key = bin2hex(random_bytes(64));
+  $u = password_hash(generateRandomString(), PASSWORD_BCRYPT);
 }
 
 
-$plaintext = $key;
-$ckey = substr(hash('sha256', $strongcipherkey, true), 0, 32);
-$cipher = 'aes-256-gcm';
-$iv_len = openssl_cipher_iv_length($cipher);
-$tag_length = 16;
-$iv = openssl_random_pseudo_bytes($iv_len);
-$tag = "";
-$ciphertext = openssl_encrypt($plaintext, $cipher, $ckey, OPENSSL_RAW_DATA, $iv, $tag, "", $tag_length);
-$encryptedtxt = base64_encode($iv.$tag.$ciphertext);
-
-
-
-$sql = "SELECT vkey,vhash FROM vAntibot";
+$sql = "SELECT vhash FROM vAntibot";
 if($result = mysqli_query($link, $sql)){
-  if(mysqli_num_rows($result) > 0){ 
-
-    
-    $sql2 = "UPDATE vAntibot SET vkey = '$encryptedtxt',vhash='$u' WHERE id = '1'";
+  if(mysqli_num_rows($result) > 0){     
+    $sql2 = "UPDATE vAntibot SET vhash='$u' WHERE id = '1'";
     if(mysqli_query($link, $sql2)){
     }else{ 
       echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
     }  
-
   }else{
 
-    $sql = "INSERT INTO vAntibot (vkey,vhash) VALUES ('$encryptedtxt','$u')";
+    $sql = "INSERT INTO vAntibot (vhash) VALUES ('$u')";
     if (mysqli_query($link, $sql)) {
     } else {
       echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
@@ -204,63 +228,18 @@ if($result = mysqli_query($link, $sql)){
 
     echo "<br><div class=\"ihuman\" >
     <form action=\"index.php\" method=\"post\" ><input class=\"honey\" type=\"text\" name=\"honey\" value=\"\" >
+    <input type=\"hidden\" name=\"key\" value=\"$key\" >
      <input type=\"submit\" name=\"submitunlock\" value=\"I am Human\" />
      </form></div>";
 
 ?>
 
-
-
-
-<?php 
-  if (isset($_POST['submitunlock'])) {
-
-    if(!empty($_POST['honey'])){
-      header("Location: http://google.com");
-      exit;
-    }
-
-    //tiny fix to do here 
-
-    $sql2 = "SELECT vkey,vhash FROM vAntibot WHERE id ='1'";
-    $myarr = array();
-   if($result2 = mysqli_query($link, $sql2)){
-     if(mysqli_num_rows($result2) > 0){ 
-       while ($row2 = mysqli_fetch_array($result2)){
-         $vkey = $row2['vkey'];
-         $vhash = $row2['vhash'];
-
-
-         $encrypted = base64_decode($vkey);
-         $ckey = substr(hash('sha256', $strongcipherkey, true), 0, 32);
-         $cipher = 'aes-256-gcm';
-         $iv_len = openssl_cipher_iv_length($cipher);
-         $tag_length = 16;
-         $iv = substr($encrypted, 0, $iv_len);
-         $tag = substr($encrypted, $iv_len, $tag_length);
-         $ciphertext = substr($encrypted, $iv_len + $tag_length);
-         $decrypted = openssl_decrypt($ciphertext, $cipher, $ckey, OPENSSL_RAW_DATA, $iv, $tag);
-     
-         
-         if(password_verify($decrypted, $vhash)){
-           echo "<br><label>You are human</label>";
-         }else{
-           echo "<br><label>You are a bot</label>";
-           //Redirect visitor or ban him,or log how many failed attempts...
-         }
-
-
-
-       }
-     }else{
-       echo "";
-     }
-    }else{
-      echo "ERROR: Could not able to execute $sql2. " . mysqli_error($link);
-    }
-
-  }
+<?php
+echo $msg;
 ?>
+
+
+
 </div>
 
 </body>
