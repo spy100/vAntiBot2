@@ -234,7 +234,9 @@ if($result = mysqli_query($link, $sql)){
 ?>
 
 <?php
+if(!empty($msg)){
 echo $msg;
+}
 ?>
 
 
