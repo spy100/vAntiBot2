@@ -175,21 +175,12 @@ $ciphertext = openssl_encrypt($plaintext, $cipher, $ckey, OPENSSL_RAW_DATA, $iv,
 $encryptedtxt = base64_encode($iv.$tag.$ciphertext);
 
 
-  if($z == $a){
     echo "<br><div class=\"ihuman\" >
     <form action=\"index.php\" method=\"post\" ><input class=\"honey\" type=\"text\" name=\"honey\" value=\"\" >
      <input type=\"hidden\" name=\"hash\" value=\"$u\" >
      <input type=\"hidden\" name=\"key\" value=\"$encryptedtxt\" >
      <input type=\"submit\" name=\"submitunlock\" value=\"I am Human\" />
      </form></div>";
-  }else{    
-    echo "<br><div class=\"ihuman\" >
-    <form action=\"index.php\" method=\"post\" ><input class=\"honey\" type=\"text\" name=\"honey\" value=\"\" >
-    <input type=\"hidden\" name=\"hash\" value=\"$u\" >
-    <input type=\"hidden\" name=\"key\" value=\"$encryptedtxt\" >
-    <input type=\"submit\" name=\"submitunlock\" value=\"I am Human\" />
-    </form></div>";
-  }
 
 ?>
 
