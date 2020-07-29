@@ -133,42 +133,32 @@ $z = substr(str_shuffle('012'),1,$length);
 $length = 1;    
 $a = substr(str_shuffle('012'),1,$length);
 
-//web scraping google ain't gona like this solution 
-$search_query = $pp[$z];
-$search_query = urlencode( $search_query );
-$html = file_get_contents( "https://www.google.com/search?q=$search_query&tbm=isch" );
-$htmlDom = new DOMDocument;
-@$htmlDom->loadHTML($html);
-$imageTags = $htmlDom->getElementsByTagName('img');
-$extractedImages = array();
-foreach($imageTags as $imageTag){
-  $imgSrc = $imageTag->getAttribute('src');
-  $extractedImages[] = array($imgSrc);
-}
-unset($extractedImages[0]);
 
-//web scraping google ain't gona like this solution 
-$search_query1 = $pp[$a];
-$search_query1 = urlencode( $search_query1 );
-$html1 = file_get_contents( "https://www.google.com/search?q=$search_query1&tbm=isch" );
-$htmlDom1 = new DOMDocument;
-@$htmlDom1->loadHTML($html1);
-$imageTags1 = $htmlDom1->getElementsByTagName('img');
-$extractedImages1 = array();
-foreach($imageTags1 as $imageTag1){
-  $imgSrc1 = $imageTag1->getAttribute('src');
-  $extractedImages1[] = array($imgSrc1);
+
+function Scraping($search_query,$random){
+  $search_query = urlencode( $search_query );
+  $html = file_get_contents( "https://www.google.com/search?q=$search_query&tbm=isch" );
+  $htmlDom = new DOMDocument;
+  @$htmlDom->loadHTML($html);
+  $imageTags = $htmlDom->getElementsByTagName('img');
+  $extractedImages = array();
+  foreach($imageTags as $imageTag){
+    $imgSrc = $imageTag->getAttribute('src');
+    $extractedImages[] = array($imgSrc);
+  }
+  unset($extractedImages[0]);
+  return $extractedImages[$random];
 }
-unset($extractedImages1[0]);
+
 
 
 echo "<br><div class=\"vidbin\" >";
 
-foreach($extractedImages[random_int(1, 3)] as $img){
+foreach(Scraping($pp[$z],random_int(1, 3)) as $img){
   echo "<div class=\"vid\" ><img src=\"".$img."\" alt=\"\" width=\"180px\" height=\"200px\" /></div>";
 }
 
-foreach($extractedImages1[random_int(4, 7)] as $img1){
+foreach(Scraping($pp[$a],random_int(4, 7)) as $img1){
   echo "<div class=\"vid\" ><img src=\"".$img1."\" alt=\"\" width=\"180px\" height=\"200px\" /></div>";
 }
 echo "</div>";
