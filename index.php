@@ -114,12 +114,6 @@ label{
     }
 
   }
-?>
-
-
-
-
-<?php
 
 //replace this with a database of famous people
 $famouspeople = array("Gal Gadot","Julia Roberts","Scarlett Johansson","Melissa McCarthy","Margot Robbie","Halle Berry","Meryl Streep","Emma Stone","Mila Kunis","Charlize Theron","Jennifer Lawrence","Jenifer Aniston","Sandra Bullock","Nicole Kidman","Natalie Portman","Paul Rudd","Bradley Cooper","Brad Pitt","Dustin Hoffman","Angelina Jolie","Mike Tyson","Will Smith","Leonardo DiCaprio","Johnny Depp","George Clooney","Tom Cruise","Harrison Ford","Al Pacino");
