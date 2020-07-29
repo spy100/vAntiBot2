@@ -153,6 +153,7 @@ function Scraping($search_query,$random){
 
 
 
+
 echo "<br><div class=\"vidbin\" >";
 foreach(Scraping($pp[$z],random_int(1, 3)) as $img){
   echo "<div class=\"vid\" ><img src=\"".$img."\" alt=\"\" width=\"180px\" height=\"200px\" /></div>";
@@ -192,7 +193,7 @@ if($result = mysqli_query($link, $sql)){
     $sql2 = "UPDATE vAntibot SET vhash='$u' WHERE id = '1'";
     if(mysqli_query($link, $sql2)){
     }else{ 
-      echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+      echo "ERROR: Could not able to execute $sql2. " . mysqli_error($link);
     }  
   }else{
 
