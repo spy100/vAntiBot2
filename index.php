@@ -126,10 +126,10 @@ $famouspeople = array("Gal Gadot","Julia Roberts","Scarlett Johansson","Melissa 
 //replace this with a database of famous people
 
 $totalpeople = count($famouspeople);
-$randomp1 = random_int(0, $totalpeople);
-$randomp2 = random_int(0, $totalpeople);
-$randomp3 = random_int(0, $totalpeople);
-$randomp4 = random_int(0, $totalpeople);
+$randomp1 = random_int(0, $totalpeople-1);
+$randomp2 = random_int(0, $totalpeople-1);
+$randomp3 = random_int(0, $totalpeople-1);
+$randomp4 = random_int(0, $totalpeople-1);
 
 //so we make it easy for humans, that's why we put only 4 people here 
 $pp = array($famouspeople[$randomp1],$famouspeople[$randomp2],$famouspeople[$randomp3],$famouspeople[$randomp4]);
