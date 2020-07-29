@@ -153,7 +153,6 @@ function Scraping($search_query,$random){
 
 
 echo "<br><div class=\"vidbin\" >";
-
 foreach(Scraping($pp[$z],random_int(1, 3)) as $img){
   echo "<div class=\"vid\" ><img src=\"".$img."\" alt=\"\" width=\"180px\" height=\"200px\" /></div>";
 }
@@ -176,7 +175,7 @@ function generateRandomString($length = 10) {
 }
 
 if($z == $a){
-  //here we encrypt the good key so we can send it via post with the hash start 
+  //here we encrypt the good key so we can send it via post 
   $key = bin2hex(random_bytes(64));
   $u = password_hash($key, PASSWORD_BCRYPT);
 }else{
@@ -201,7 +200,6 @@ if($result = mysqli_query($link, $sql)){
     } else {
       echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
     }
-
   }
 }else{
   echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
@@ -215,12 +213,12 @@ if($result = mysqli_query($link, $sql)){
      <input type=\"submit\" name=\"submitunlock\" value=\"I am Human\" />
      </form></div>";
 
-?>
 
-<?php
 if(!empty($msg)){
 echo $msg;
 }
+
+
 ?>
 
 
