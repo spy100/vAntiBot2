@@ -137,7 +137,8 @@ $a = substr(str_shuffle('012'),1,$length);
 
 function Scraping($search_query,$random){
   $search_query = urlencode( $search_query );
-  $html = file_get_contents( "https://www.google.com/search?q=$search_query&tbm=isch" );
+  $context = stream_context_create(array('http' => array('header'=>'Connection: close\r\n')));
+  $html = file_get_contents( "https://www.google.com/search?q=$search_query&tbm=isch",false,$context);
   $htmlDom = new DOMDocument;
   @$htmlDom->loadHTML($html);
   $imageTags = $htmlDom->getElementsByTagName('img');
